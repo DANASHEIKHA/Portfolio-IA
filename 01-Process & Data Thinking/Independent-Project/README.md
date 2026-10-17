@@ -1,4 +1,4 @@
-# [Project Name]
+ [Project Name]
 
 AI Leave Request & Manager Approval
 
@@ -141,9 +141,11 @@ text I need some time off.
 
 📸 Evidence
 Final Result
-q
+<img width="1795" height="407" alt="q" src="https://github.com/user-attachments/assets/cd26a8fd-e4dc-4c83-8d0c-c9608b3aa96f" />
+
 Workflow
-zap task
+<img width="16384" height="6160" alt="zap task" src="https://github.com/user-attachments/assets/80cc9818-e793-4902-8cd0-6ddbb59607f5" />
+
 ⚠️ Challenges & Failures
 Challenges & Failures
 
