@@ -1,233 +1,169 @@
-# [Project Name]
+Dana Sheikha | Software & AI Portfolio
 
-> [One-sentence description of what this project does.]
+موقع شخصي ثنائي اللغة (عربي/إنجليزي) يعرض مهارات دانا شيخة ومشاريعها وخبراتها في البرمجيات وأتمتة الذكاء الاصطناعي.
 
----
+🎯 Problem
+The Context
 
-## 🎯 Problem
+تعمل مهندسة برمجيات متخصصة في أتمتة الذكاء الاصطناعي على مشاريع متنوعة (ويب وأتمتة وخدمات)، لكن هذه الأعمال مبعثرة بين أماكن مختلفة.
 
-### The Context
+The Problem
 
-[What is the real-world situation?]
+من يريد التعرف على خبرتها (صاحب عمل أو جهة تعاون) لا يجد مكانًا واحدًا يجمع المهارات والمشاريع والخبرات والتدريبات، ولا طريقة سريعة للتواصل معها.
 
-### The Problem
+Why It Matters
 
-[What problem are you trying to solve?]
+الموقع الشخصي هو أول انطباع مهني. وجمع الأعمال في مكان واحد منظم وبلغتين يسهّل على الزائر فهم ما تقدمه، ويزيد فرص التعاون.
 
-### Why It Matters
+💡 Solution
 
-[Why is solving this problem useful?]
-
----
-
-## 💡 Solution
-
-[Explain your solution briefly.]
+موقع بورتفوليو متعدد الصفحات، بتصميم حديث وتبديل بين العربية والإنجليزية، ينظم المحتوى المهني في أقسام واضحة.
 
 What does the system do?
 
-1. ...
-2. ...
-3. ...
-4. ...
+يعرّف بصاحبة الموقع ويعرض نبذة عنها وخلفيتها الدراسية.
+يعرض المهارات التقنية مجمّعة في أربع فئات: تطوير الويب والموبايل، والخلفية وقواعد البيانات، والذكاء الاصطناعي والأتمتة، والأدوات وسير العمل.
+يعرض المشاريع (Claim-X وInteractive Learning وSmart Workflows) والخبرات المهنية والتدريبات.
+يوفر نموذج تواصل يجهّز رسالة جاهزة تُفتح في تطبيق البريد.
+👤 Users
 
----
+Primary Users:
+أصحاب العمل والجهات التي تبحث عن مطورة أو متعاونة في البرمجيات والأتمتة، وزوار الموقع المهتمون بأعمالها.
 
-## 👤 Users
+User Need:
+فهم ما تجيده صاحبة الموقع بسرعة، والاطلاع على مشاريع حقيقية، والتواصل معها بسهولة.
 
-**Primary Users:**  
-[Who will use this solution?]
+🧠 How I Designed the Solution
 
-**User Need:**  
-[What do they need to accomplish?]
+قسّمت المحتوى إلى صفحات واضحة بترتيب يتبع طريقة قراءة الزائر: من أنا، ثم ماذا أجيد، ثم أين عملت، ثم ماذا بنيت، ثم كيف نتواصل. وجعلت الموقع ثنائي اللغة لأن جمهوره عربي ودولي. وركزت على بساطة التنقل والتسلسل البصري بدل المؤثرات الكثيرة، وجعلت دعوة التواصل ظاهرة في الأعلى وفي نهاية الصفحة.
 
----
-
-## 🧠 How I Designed the Solution
-
-[Briefly explain the main thinking/design decisions behind the solution.]
-
----
-
-## ⚙️ How It Works
-
-```text
-Input
+⚙️ How It Works
+text
+الزائر يفتح الموقع
   ↓
-[Step]
+الرئيسية: تعريف سريع ودعوة لاستعراض المشاريع
   ↓
-AI / Logic
+نبذة ← المهارات ← الخبرات ← المشاريع ← التدريبات
   ↓
-[Step]
+نموذج التواصل
   ↓
-Output
-```
-
----
-
-## 🤖 Role of AI
+رسالة جاهزة تُفتح في تطبيق البريد
+🤖 Role of AI
 
 What does AI do in this solution?
 
-- ...
-- ...
-- ...
-
-### What AI Should NOT Do
-
-- ...
-- ...
-
----
-
-## 🔄 Automation
+الموقع نفسه لا يحتوي على مكوّن ذكاء اصطناعي ظاهر للزائر.
+[إن استُخدم Lovable لبناء الموقع من مواصفات بلغة طبيعية، اكتب ذلك هنا.]
+[وإن استخدمت AI لصياغة النصوص أو ترجمتها، اذكره.]
+What AI Should NOT Do
+عدم اختراع مهارات أو خبرات أو مشاريع غير حقيقية في المحتوى.
+عدم تغيير الأرقام والمعلومات الشخصية دون مراجعة صاحبة الموقع.
+🔄 Automation
 
 What parts of the process are automated?
 
-- ...
-- ...
-- ...
+تبديل لغة الواجهة بين العربية والإنجليزية.
+تجهيز رسالة البريد تلقائيًا من بيانات نموذج التواصل.
+[أضف أي أتمتة أخرى نفذتها، إن وجدت.]
+🗂️ Data
+Input
 
----
+المحتوى المهني: النبذة والمهارات والخبرات والمشاريع والتدريبات، وبيانات نموذج التواصل (الاسم والبريد والرسالة).
 
-## 🗂️ Data
+Output
 
-### Input
+صفحات الموقع، ورسالة بريد جاهزة تُفتح في تطبيق البريد عند الإرسال.
 
-[What information enters the system?]
+🛠️ Tools & Technologies
+Tool	Purpose
+Lovable	بناء الموقع ونشره
+[إطار الواجهة إن تعرفه]	تنفيذ الصفحات والتنقل
+[أي أداة أخرى]	[الغرض]
+🔑 Key Design Decisions
+Decision 1
 
-### Output
+Decision:
+جعل الموقع ثنائي اللغة مع زر تبديل ظاهر.
 
-[What does the system produce?]
+Why:
+لأن الجمهور المحتمل يشمل متحدثي العربية وأصحاب عمل بالإنجليزية، ولا يجب أن تفقد الزيارة قيمتها بسبب اللغة.
 
----
+Decision 2
 
-## 🛠️ Tools & Technologies
+Decision:
+جعل نموذج التواصل يجهّز رسالة تُفتح في تطبيق البريد بدل الاعتماد على خادم لاستقبال الرسائل.
 
-| Tool | Purpose |
-|---|---|
-| [Tool] | [Purpose] |
-| [Tool] | [Purpose] |
-| [Tool] | [Purpose] |
+Why:
+لأنه حل بسيط لا يحتاج إلى قاعدة بيانات أو خدمة خارجية، ويناسب موقعًا شخصيًا صغيرًا.
 
----
+🧪 Testing
+Test 1
 
-## 🔑 Key Design Decisions
+Input:
+فتح الموقع، والتنقل بين صفحات الرئيسية والمهارات والمشاريع والخبرات.
 
-### Decision 1
+Expected Result:
+تفتح كل صفحة بشكل صحيح ويظهر المحتوى كاملًا.
 
-**Decision:**  
-...
+Actual Result:
+[تعبّأ بعد التجربة]
 
-**Why:**  
-...
+Status: ✅ / ❌
 
-### Decision 2
+Test 2
 
-**Decision:**  
-...
+Input:
+تبديل اللغة، ثم تعبئة نموذج التواصل والضغط على "جهّز الرسالة".
 
-**Why:**  
-...
+Expected Result:
+تتغير اللغة والاتجاه بشكل صحيح، وتُفتح رسالة بريد جاهزة بالمعلومات المدخلة.
 
----
+Actual Result:
+[تعبّأ بعد التجربة]
 
-## 🧪 Testing
+Status: ✅ / ❌
 
-### Test 1
+📸 Evidence
+Final Result
 
-**Input:**  
-...
+https://dana-codes-creatively.lovable.app/
+Show Image
+<img width="1880" height="897" alt="d" src="https://github.com/user-attachments/assets/1ef3e3e8-8ca3-41d4-8ce9-e2099deae530" />
+Workflow
+الزائر يفتح الموقع
+  ↓
+الرئيسية: تعريف سريع ودعوة لاستعراض المشاريع
+  ↓
+نبذة ← المهارات ← الخبرات ← المشاريع ← التدريبات
+  ↓
+نموذج التواصل
+  ↓
+رسالة جاهزة تُفتح في تطبيق البريد
 
-**Expected Result:**  
-...
+📚 What I Learned
+Technical Lesson
 
-**Actual Result:**  
-...
+بناء صفحة شخصية بواسطة ال AI
 
-**Status:** ✅ / ❌
 
----
+AI Lesson
 
-### Test 2
-
-**Input:**  
-...
-
-**Expected Result:**  
-...
-
-**Actual Result:**  
-...
-
-**Status:** ✅ / ❌
-
----
-
-## 📸 Evidence
-
-### Final Result
-
-![Final Result](./screenshots/final-result.png)
-
-### Workflow
-
-![Workflow](./screenshots/workflow.png)
-
----
-
-## ⚠️ Challenges & Failures
-
-What didn't work as expected?
-
-- ...
-- ...
-
-How did I solve it?
-
-- ...
-- ...
-
----
-
-## 📚 What I Learned
-
-### Technical Lesson
-
-...
-
-### Problem-Solving Lesson
-
-...
-
-### AI Lesson
-
-...
-
----
-
-## 🔮 Future Improvements
+التعامل مع ال AI بشكل احترافي ونتائج قوية جدا 
+🔮 Future Improvements
 
 If I continued developing this project, I would:
 
-- ...
-- ...
-- ...
+إرفاق صفحة تفصيلية لكل مشروع مع صور وروابط وشرح لما بُني وكيف.
+إضافة نموذج تواصل يرسل الرسالة مباشرة بدل فتح تطبيق البريد.
+إضافة أدلة للأعمال مثل لقطات شاشة أو روابط تشغيل مباشرة للمشاريع.
+🔗 Project Links
 
----
+Live Demo: https://dana-codes-creatively.lovable.app
 
-## 🔗 Project Links
+Repository: (https://github.com/DANASHEIKHA/dana-codes-creatively)
 
-**Live Demo:** [Link]
+👩‍💻 Author
 
-**Workflow:** [Link]
+Dana Sheikha
 
-**Repository:** [Link]
 
----
-
-## 👩‍💻 Author
-
-**[Your Name]**
-
-[LinkedIn] · [GitHub]
