@@ -1,278 +1,219 @@
-<img width="16384" height="6160" alt="zap task" src="https://github.com/user-attachments/assets/8b50f4a6-2f10-4fc5-bb48-5729b2ddbcd4" /># [Project Name]
+AI Client Intake & Request Routing System
 
-AI Leave Request & Manager Approval
+نظام أتمتة يستقبل طلبات العملاء المحتملين، ويستخرج المعلومات المهمة منها باستخدام AI، ثم يوجّه كل طلب إلى المسار المناسب: متابعة مباشرة أو مراجعة بشرية.
 
-نظام أتمتة يحوّل طلبات إجازة الموظفين المكتوبة بحرية إلى بيانات منظمة، ويتحقق من اكتمالها، ثم يرسل الطلبات المكتملة إلى المدير ليوافق عليها أو يرفضها.
+🎯 Problem
+السياق
 
-## 🎯 Problem
+تستقبل شركة خدمات طلبات من عملاء محتملين، وتراجعها لفهم احتياجاتهم وتحديد الخطوة التالية المناسبة لكل طلب.
 
-### The Context
+المشكلة
 
-يرسل الموظفون طلبات الإجازة عبر الرسائل أو البريد أو المحادثات. يقرأ المدير كل طلب، ويحدد نوع الإجازة وتواريخها، ويتحقق من اكتمال المعلومات، ثم يقرر ويبلغ الموظف بالنتيجة.
-### The Problem
-
-كل طلب يحتاج إلى العمل اليدوي نفسه: القراءة والاستخراج والتحقق والمتابعة والرد. ومع زيادة عدد الطلبات، قد يضيع بعضها، وتُتخذ قرارات بناءً على تواريخ غير واضحة، ويتأخر الرد، ولا يوجد سجل موثوق.
-### Why It Matters
+يعالج الموظفون الطلبات يدويًا: يقرأ الموظف كل طلب، ويفهمه، وينظم معلوماته، ويتحقق من اكتمالها، ثم يحدد الإجراء التالي. ومع زيادة عدد الطلبات، تصبح هذه العملية مستهلكة للوقت والجهد.
 
 لماذا هذا مهم؟
 
-يجب أن يذهب وقت المدير إلى القرار نفسه (موافقة أو رفض)، لا إلى مطاردة التواريخ الناقصة. كما أن السجل المنظم يجعل كل طلب وقرار قابلًا للتتبع.
----
+تكرار المهام اليدوية مع كل طلب جديد قد يؤدي إلى تأخر المتابعة أو إغفال معلومات مهمة. وتنظيم الطلبات وتوجيهها آليًا يوفّر وقت الموظفين ويجعل التعامل مع الطلبات أكثر اتساقًا.
 
-## 💡 Solution
+💡 Solution
 
-سير عمل في Zapier يستقبل كل طلب من Google Form، ويستخدم AI لاستخراج الحقول المهمة، ثم تطبق قاعدة واضحة لتحديد اكتمال الطلب، ثم يوجّهه. الطلبات المكتملة تذهب إلى المدير ليتخذ قرارًا بشريًا. الطلبات الناقصة تعود إلى الموظف.
+سير عمل في Zapier يبدأ من Google Form، ويستخدم AI by Zapier لتحويل نص الطلب الحر إلى بيانات منظمة، ثم يطبّق قاعدة واضحة لتحديد هل الطلب مكتمل. الطلب المكتمل يذهب إلى مسار المتابعة، والطلب الناقص أو غير الواضح يذهب إلى المراجعة البشرية. وتُسجَّل النتيجة في Google Sheets ويُرسل إشعار مناسب.
 
 ماذا يفعل النظام؟
 
-يستقبل طلب الإجازة من Google Forms.
-يستخرج نوع الإجازة وتاريخ البداية وتاريخ النهاية وملخص الطلب من النص الحر.
-يصنّف الطلب VALID أو NEEDS_REVIEW.
-يرسل الطلبات VALID إلى المدير، ويسجل قراره في Google Sheets.
-يعيد الطلبات NEEDS_REVIEW إلى الموظف مع بيان المعلومات الناقصة.
----
+يستقبل طلب العميل من Google Forms.
+يستخرج نوع الخدمة والمدة الزمنية والميزانية وملخص الطلب من النص الحر.
+يحدد المعلومات الناقصة ويصنّف الطلب VALID أو NEEDS_REVIEW.
+يوجّه الطلب المكتمل إلى web_team والطلب الناقص إلى human_review.
+يسجل النتيجة في Google Sheets ويرسل البريد المناسب.
+👤 Users
+Primary Users:
+[Who will use this solution?]
 
-## 👤 Users
-
-**Primary Users:**  
-المستخدمون الأساسيون: الموظفون الذين يطلبون الإجازة، والمدير الذي يوافق أو يرفض.
-
-احتياجهم: يحتاج الموظف إلى طريقة بسيطة لتقديم الطلب والحصول على إجابة واضحة. ويحتاج المدير إلى رؤية الطلبات المكتملة فقط، واتخاذ قرار واحد لكل طلب.
-**User Need:**  
+User Need:
 [What do they need to accomplish?]
 
----
+🧠 How I Designed the Solution
+[Briefly explain the main thinking/design decisions behind the solution.]
 
-## 🧠 How I Designed the Solution
-
-يفصل التصميم بين ثلاثة أدوار:
-
-text
-AI      → Understand  (يفهم النص)
-Logic   → Control     (هل الطلب مكتمل؟)
-Manager → Judge       (موافقة أو رفض)
-
-لا يوافق AI على الإجازة ولا يرفضها. فالموافقة تعتمد على سياق لا يملكه النظام (ضغط العمل، تعارض الإجازات، رصيد الموظف)، لذلك يبقى هذا القرار بيد إنسان. والطلبات الناقصة لا تصل إلى المدير أبدًا، فلا يُطلب منه قرار على معلومات ناقصة.
----
-
-## ⚙️ How It Works
-
-Google Form (الموظف يرسل الطلب)
+⚙️ How It Works
+Input
   ↓
-Zapier Trigger: New Form Response
+[Step]
   ↓
-AI by Zapier: استخراج الحقول المنظمة
+AI / Logic
   ↓
-Paths: هل request_status = VALID ؟
-  ├─ VALID → Google Sheets (Pending)
-  │            ↓
-  │          موافقة المدير (Human in the Loop)
-  │            ↓
-  │          Google Sheets (تحديث الصف نفسه)
-  │            ↓
-  │          بريد للموظف بالقرار
-  │
-  └─ NEEDS_REVIEW → Google Sheets (Not applicable)
-                       ↓
-                     بريد للموظف (نسخة للمدير)
-
-## 🤖 Role of AI
-
+[Step]
+  ↓
+Output
 ماذا يفعل AI في هذا الحل؟
 
-يقرأ طلب الإجازة المكتوب بحرية.
-يستخرج leave_type وstart_date وend_date كما كُتبت تمامًا.
-يكتب ملخصًا قصيرًا ويحدد المعلومات الناقصة أو غير الواضحة.
-يرجع request_status (VALID أو NEEDS_REVIEW) وفق قواعد صارمة في الـPrompt.
+يفهم نص الطلب الحر.
+يستخرج نوع الخدمة، ويلخص الطلب.
+يستخرج الميزانية والمدة الزمنية إن ذُكرتا صراحةً.
+يحدد المعلومات المطلوبة التي تبدو ناقصة أو غير واضحة.
 
 ما الذي يجب ألا يفعله AI؟
 
-الموافقة على الإجازة أو رفضها.
-اختراع التواريخ أو تخمينها أو حسابها، أو إضافة سنة لم تُذكر.
-تحويل تعبيرات غامضة مثل "next week" إلى تواريخ.
-
-## 🔄 Automation
+اختراع ميزانية أو مدة زمنية أو أي تفاصيل لم يذكرها العميل. المعلومة غير الموجودة تُسجَّل null ولا تُخمَّن.
+تحديد مسار الطلب أو قرار المتابعة بنفسه. المسار تتحكم فيه قاعدة ثابتة (request_status).
+🔄 Automation
 
 ما الأجزاء المؤتمتة من العملية؟
 
-استقبال الطلب وبدء سير العمل.
-استخراج المعلومات وتنظيمها.
-تحديد اكتمال الطلب واختيار المسار.
-تسجيل الطلب وقرار المدير في Google Sheets.
-إشعار المدير، وإبلاغ الموظف بالنتيجة أو بالمعلومات الناقصة.
+استقبال الطلب وبدء سير العمل عند وصول رد جديد.
+استخراج المعلومات وتنظيمها في حقول.
+تحديد حالة الطلب (VALID أو NEEDS_REVIEW) واختيار المسار.
+تسجيل النتائج في Google Sheets.
+إرسال البريد المناسب لكل مسار.
 
-## 🗂️ Data
-
-### Input
+وتبقى المراجعة البشرية للحالات الناقصة أو الغامضة. الأتمتة هنا تقلل الجهد المتكرر ولا تلغي الحكم البشري عند الحاجة.
 
 🗂️ Data
 
-Input حقول النموذج: employee_name وemail وdepartment وrequest_text.
+Input حقول النموذج: client_name وemail وcompany وrequest_text. ويمثل request_text النص الحر الذي يكتبه العميل.
 
-Output أعمدة الـSheet: employee_name وemail وdepartment وrequest_text وleave_type وstart_date وend_date وrequest_summary وmissing_information وrequest_status وrouting وmanager_decision وprocessed_at وdecided_at.
-لقيم المسموح بها:
+Output معلومات منظمة من AI: service_type وrequest_summary وtimeline وbudget وmissing_information. ونتائج المعالجة: validation_status (VALID أو NEEDS_REVIEW) وrequires_human (true أو false) وrouting (web_team أو human_review) وprocessed_at.
 
-الحقل	القيم
-leave_type	annual, sick, emergency, unpaid, other, unknown
-request_status	VALID, NEEDS_REVIEW
-routing	manager_approval, clarification
-manager_decision	Pending، أو القرار الذي تعيده خطوة الموافقة، أو Not applicable
+قيم service_type المسموح بها: web_design وdigital_marketing وgraphic_design وapp_development وconsulting وai_services وother وunknown.
 
-## 🛠️ Tools & Technologies
 
+🛠️ Tools & Technologies
 الأداة	الغرض
-Google Forms	استقبال طلبات الإجازة
+Google Forms	استقبال طلبات العملاء
 Zapier	تشغيل سير العمل وربط الخطوات
 AI by Zapier	استخراج بيانات منظمة من النص الحر
-Paths by Zapier	التوجيه بحسب request_status
-Human in the Loop by Zapier	طلب موافقة المدير أو رفضه
-Google Sheets	تسجيل الطلبات والقرارات
-Gmail	إشعار الموظفين (والمدير بنسخة)
----
-
-## 🔑 Key Design Decisions
-
+Paths by Zapier	توجيه الطلب بحسب حالته
+Google Sheets	تسجيل الطلبات ونتائج المعالجة
+Email	إشعار الموظفين بنتيجة كل طلب
+🔑 Key Design Decisions
 Decision 1
 
-القرار: المدير هو من يتخذ قرار الموافقة أو الرفض دائمًا. النظام يقرر فقط هل الطلب مكتمل.
+القرار: AI يستخرج المعلومات فقط، والقواعد هي التي تحدد حالة الطلب ومساره.
 
-السبب: الموافقة تعتمد على سياق عمل لا يملكه النظام. والطلب VALID يعني فقط أنه جاهز لعرضه على المدير.
+السبب: قدرة AI على فهم الطلب لا تعني أنه يجب أن يملك القرار النهائي. القاعدة الثابتة يمكن اختبارها والتنبؤ بها، بينما قد يخطئ AI في قرار التوجيه.
 
 Decision 2
 
-القرار: تُقبل التواريخ الصريحة فقط. التعبيرات النسبية ("next week") والمدة وحدها تصبح null.
+القرار: الطلب لا يكون VALID إلا إذا توفرت الميزانية والمدة الزمنية ونوع الخدمة. وأي نقص أو غموض يحوّله إلى NEEDS_REVIEW.
 
-السبب: يجب ألا يفترض النظام معلومات لم يقدمها الموظف، ولا ينبغي أن يقرر المدير على تاريخ مخمَّن.
+السبب: لا ينبغي اعتبار الطلب غير المكتمل جاهزًا للمتابعة لمجرد أن AI لخّصه. وعدم اختراع المعلومات الناقصة أهم من تمرير الطلب بسرعة.
 
 Decision 3
 
-القرار: الطلبات الناقصة تعود إلى الموظف ولا تصل إلى المدير. ومسار Needs Clarification هو الـFallback لأي حالة غير VALID.
+القرار: التمييز بين القيم: null (لم يذكرها العميل) وunknown (لا يمكن تحديد الخدمة) وother (الخدمة مفهومة لكنها خارج الفئات) وNONE (لا نقص).
 
-السبب: نوجّه الاستثناء بدل إيقافه، ونبعد الطلبات الناقصة عن المدير.
+السبب: هذه القيم لا تعني الشيء نفسه، واستخدام كل قيمة بمعناها يجعل القرارات اللاحقة أدق.
 
 Decision 4
 
-القرار: إذا رفض المدير يكمل التشغيل. وإذا انتهت مهلة الموافقة يتوقف التشغيل.
+القرار: مسار المراجعة البشرية هو الـFallback لأي حالة غير VALID، ولا نستخدم Filter يوقف الطلب.
 
-السبب: الرفض قرار عمل صحيح يجب تسجيله وإبلاغ الموظف به. أما عدم الرد فليس قرارًا، فلا يجوز تسجيله موافقة ولا رفضًا.
+السبب: نريد توجيه الاستثناء لا إيقافه، حتى لا يضيع طلب فيه نقص.
 
 Decision 5
 
-القرار: حقول التواريخ في مخرجات AI من نوع Text وليست Date.
+القرار: NEEDS_REVIEW حالة عمل مختلفة عن الفشل التقني. فشل AI أو Sheets أو البريد يُراجَع من سجل التنفيذ في Zapier ولا يُسجَّل تلقائيًا كمراجعة بشرية.
 
-السبب: نوع Date يُجبر AI على إرجاع تاريخ كامل حتى لو لم يذكر الموظف أي تاريخ، وهذا يكسر قاعدة عدم اختراع المعلومات.
-
-## 🧪 Testing
-
-Test 1
+السبب: الطلب الناقص استثناء في العمل (Exception)، أما الفشل التقني فهو خطأ في النظام (Error) ويحتاج Debugging.
+🧪 Testing
+est 1 — طلب مكتمل
 
 Input:
 
 text
-I would like to request annual leave from December 20 to December 24 to travel with my family.
+We need a website for our company.
+Our budget is $5000.
+We need it next month.
 
-النتيجة المتوقعة: leave_type = annual وstart_date = December 20 وend_date = December 24 وmissing_information = NONE وrequest_status = VALID. المسار: Ready for Manager. يوافق المدير؛ يُحدَّث الصف بالموافقة ويصل الموظف قرار.
-
-النتيجة الفعلية: [تعبّأ بعد التشغيل الكامل]
-
-Status: ✅ / ❌
-
-Test 2
-
-Input: نفس طلب Test 1. المدير يرفض.
-
-النتيجة المتوقعة: يُحدَّث الصف بقرار الرفض، وباقي الأعمدة كما هي، ويصل الموظف بريد فيه القرار.
-
-النتيجة الفعلية: [تعبّأ بعد التشغيل الكامل]
-
-Status: ✅ / ❌
-
-Test 3
-
-Input:
-
-text
-I need sick leave starting December 20.
-
-النتيجة المتوقعة: end_date = null وmissing_information = end_date وrequest_status = NEEDS_REVIEW. المسار: Needs Clarification. لا يُسأل المدير، ويصل الموظف بريد يطلب المعلومة الناقصة.
+النتيجة المتوقعة: service_type = website وtimeline = next month وbudget = $5000 وmissing_information = NONE وrequest_status = VALID. المسار: Valid Request. في الـSheet: requires_human = false وrouting = web_team. البريد: New Valid Client Request.
 
 النتيجة الفعلية: [تعبّأ بعد التشغيل]
 
 Status: ✅ / ❌
 
-Test 4
+Test 2 — ميزانية ناقصة
 
 Input:
 
 text
-I need some time off.
+We need a website for our company.
+We need it next month.
 
-النتيجة المتوقعة: leave_type = unknown والتاريخان null وmissing_information = leave_type, start_date, end_date وrequest_status = NEEDS_REVIEW. المسار: Needs Clarification.
+النتيجة المتوقعة: budget = null وmissing_information = budget وrequest_status = NEEDS_REVIEW. المسار: Needs Human Review. في الـSheet: requires_human = true وrouting = human_review. البريد: Client Request Requires Human Review.
 
 النتيجة الفعلية: [تعبّأ بعد التشغيل]
 
+Status: ✅ / ❌
+
+Test 3 — مدة زمنية غامضة
+
+Input:
+
+text
+We need a website soon.
+Our budget is $5000.
+
+النتيجة المتوقعة: timeline = null وmissing_information = timeline وrequest_status = NEEDS_REVIEW. المسار: Needs Human Review.
+
+النتيجة الفعلية: [تعبّأ بعد التشغيل]
+
+Status: ✅ / ❌
+
+Test 4 — عدة معلومات ناقصة
+
+Input:
+
+text
+We need a website for our company.
+
+النتيجة المتوقعة: timeline = null وbudget = null وmissing_information = timeline, budget وrequest_status = NEEDS_REVIEW. المسار: Needs Human Review.
+
+النتيجة الفعلية: [تعبّأ بعد التشغيل]
+
+📸 Evidence
+<img width="1846" height="262" alt="w" src="https://github.com/user-attachments/assets/908c949c-9397-471c-a47d-991d2d185bf3" />
 
 
-## 📸 Evidence
+<img width="16384" height="7049" alt="zap 1" src="https://github.com/user-attachments/assets/bff9187c-a401-41cd-baf4-4630168346ec" />
 
-### Final Result
-<img width="1795" height="407" alt="q" src="https://github.com/user-attachments/assets/a566a56b-b2e2-4e89-9ebc-11efe582853f" />
 
-### Workflow
-
-<img width="16384" height="6160" alt="zap task" src="https://github.com/user-attachments/assets/260bb9ff-4e8c-4581-86ad-aab5fc746809" />
-
----
-
-## ⚠️ Challenges & Failures
-
-Challenges & Failures
-
+⚠️ Challenges & Failures
 ما الذي لم يعمل كما توقعت؟
-
-ظهرت التواريخ فاضية في رسالة الموافقة. كان السبب أن حقول مخرجات AI عُرّفت بنوع Date وRequired؛ وتغييرها إلى Text حل المشكلة ووافق قاعدة "لا تخمّن".
-إعداد Stop run الافتراضي عند الرفض كان سينهي سير العمل مع كل رفض، فلا يُسجَّل شيء ولا يُبلَّغ الموظف.
-بريد الاختبار من خطوة الموافقة كان معاينة فقط، بدون زري Approve وDecline. والقيمة الفعلية للقرار لا تظهر إلا بعد نشر الـZap وتقديم طلب حقيقي.
-النشر كان محجوبًا بسبب خطوة فاضية في المسار الثاني.
-أظهر Zapier تحذيرًا أن الـZap ينتهي بخطوة Human in the Loop. وكان الحل إضافة خطوتي التحديث وإشعار الموظف بعدها.
-
+في الاختبار الثاني (الميزانية ناقصة)، رجّع AI قيمة $5000 في حقل budget مع أن العميل ما ذكر أي ميزانية. اخترع معلومة بدل أن يرجّع null.
+بعد ذلك دخل الطلب مسار Valid Request بدل Needs Human Review، لأن الـPath قرأ request_status = VALID.
 كيف حللتها؟
+فحصت الطبقات بالترتيب، وكان أول نتيجة خاطئة في مخرجات AI، فما كان الخطأ في الـPath نفسه.
+أضفت إلى الـPrompt قاعدة صريحة: "إذا لم تُذكر الميزانية، أرجع null ولا تخمّن".
+أعدت اختبار الطلب نفسه وتأكدت أن النتيجة صارت budget = null وNEEDS_REVIEW.
+📚 What I Learned
 
-اختبرت كل طبقة بالترتيب (Trigger ثم مخرجات AI ثم Path ثم Sheets ثم الموافقة ثم البريد)، وصلحت أول خطوة أعطت نتيجة خاطئة.
-أعدت ربط الحقول من الـData picker بدل كتابتها يدويًا، وتأكدت أن كل قيمة ظهرت كحقل مربوط.
+Technical Lesson
 
-## 📚 What I Learned
-
-#Technical Lesson
-
-نوع الحقل مهم. نوع خاطئ (Date بدل Text) غيّر بصمت ما يُسمح لـAI بإرجاعه.
+الأداة تنفّذ التصميم ولا تصمم الحل بدلًا عنا. وفهم العمل وتفكيكه قبل فتح Zapier جعل بناء الـZap أسهل وأوضح.
 
 Problem-Solving Lesson
 
-اختبر طبقة واحدة في كل مرة، وابحث عن أول نتيجة خاطئة بدل تغيير عدة أشياء معًا.
+عند ظهور نتيجة خاطئة، أفحص الطبقات بالترتيب (Trigger ثم Input ثم AI ثم Status ثم Path ثم Sheets ثم Email) وأصلح أول طبقة فيها الخطأ.
 
 AI Lesson
 
-AI ممتاز في فهم النصوص غير المنظمة، لكن القواعد التي تتحكم في التوجيه والقرار النهائي يجب أن تبقى خارج AI.
-## 🔮 Future Improvements
+AI يفهم، والقاعدة تتحكم، والإنسان يحكم. و"Unknown is better than invented": المعلومة غير الموجودة تبقى ناقصة ولا تُخمَّن.
+
+🔮 Future Improvements
 
 لو تابعت تطوير المشروع، فسأقوم بـ:
 
-إرسال قالبين مختلفين للبريد: واحد للموافقة وواحد للرفض.
-إضافة تذكير عندما لا يرد المدير بعد مدة محددة.
-التحقق من رصيد إجازات الموظف وتعارض الإجازات قبل الإرسال إلى المدير.
-دعم أكثر من مدير بحسب القسم.
+إضافة مسارات لأنواع خدمات أخرى بدل مسار web_team فقط.
+معالجة الفشل التقني تلقائيًا بتنبيه منفصل بدل مراجعة سجل التنفيذ يدويًا.
+تحديث السجل الأصلي للطلب بدل إنشاء سجل جديد، وربط ذلك بـRow ID.
+إضافة ردّ تلقائي للعميل يطلب المعلومات الناقصة.
+🔗 Project Links
+(https://docs.google.com/forms/d/e/1FAIpQLSfJhuwhSPMecQ_UMjD0bqXj9NtooPQnrKMqJzoBwjTBQPwv4w/viewform?usp=dialog)
+https://docs.google.com/spreadsheets/d/15wXXQnJyXt2gYemSJ2_sl_v61lgCUmqK5mrGMz2ZwYI/edit?usp=sharing
 
-## 🔗 Project Links
 
-[**Live Demo:** [Link]
-](https://docs.google.com/forms/d/e/1FAIpQLSenRUxUK6y6qEhDN-Vf9hKd2_zkBUckPhcKGvatWBlgzOmxog/viewform?usp=dialog)
-https://docs.google.com/spreadsheets/d/1XUJOjfLwqCfScgVvMFamSxEmR1KeFBJpXeCjttNsnJM/edit?gid=0#gid=0
 
----
-
-## 👩‍💻 Author
-
-**[Dana sheikha]**
-
+👩‍💻 Author
+[Dana sheikha]
 
