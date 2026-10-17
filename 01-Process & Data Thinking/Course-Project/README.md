@@ -211,6 +211,7 @@ AI يفهم، والقاعدة تتحكم، والإنسان يحكم. و"Unknow
 🔗 Project Links
 (https://docs.google.com/forms/d/e/1FAIpQLSfJhuwhSPMecQ_UMjD0bqXj9NtooPQnrKMqJzoBwjTBQPwv4w/viewform?usp=dialog)
 https://docs.google.com/spreadsheets/d/15wXXQnJyXt2gYemSJ2_sl_v61lgCUmqK5mrGMz2ZwYI/edit?usp=sharing
+Project Links
 
 
 
