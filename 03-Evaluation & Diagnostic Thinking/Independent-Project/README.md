@@ -1,233 +1,199 @@
-# [Project Name]
+MarketingGuide AI
 
-> [One-sentence description of what this project does.]
+مساعد تسويق على Dify يجيب عن أسئلة التسويق الأساسية بالاعتماد على ثلاثة ملفات معرفة محددة فقط، ويصرّح عندما لا تتوفر المعلومة بدل أن يختلقها.
 
----
+الأجزاء بين [ ] تحتاج تعبئتها بنتائجك الفعلية قبل التسليم. لم أكتب فيها أي نتيجة لم تحدث.
 
-## 🎯 Problem
+🎯 Problem
+The Context
 
-### The Context
+أصحاب المشاريع الصغيرة (مثل متاجر العطور والهدايا) والمبتدئون في التسويق يبحثون عن إجابات سريعة عن أساسيات التسويق، وغالبًا يسألون أدوات ذكاء اصطناعي عامة.
 
-[What is the real-world situation?]
+The Problem
 
-### The Problem
+الأدوات العامة تجيب من معرفة غير محددة المصدر، وقد تختلق أو تبالغ، ولا يمكن التحقق من مصدر الإجابة.
 
-[What problem are you trying to solve?]
+Why It Matters
 
-### Why It Matters
+المستخدم المبتدئ لا يستطيع التمييز بين إجابة صحيحة وأخرى مختلقة. نظام يوضح مصدر إجابته ويقول "لا أعرف" عند غياب المعلومة أكثر أمانًا في قرارات تؤثر على مبيعاته.
 
-[Why is solving this problem useful?]
+💡 Solution
 
----
-
-## 💡 Solution
-
-[Explain your solution briefly.]
+تطبيق Chatflow على Dify يسترجع مقاطع من قاعدة معرفة مكوّنة من ثلاثة ملفات عربية، ثم يولّد الإجابة من تلك المقاطع فقط.
 
 What does the system do?
+يستقبل سؤال المستخدم عن التسويق.
+يسترجع المقاطع المرتبطة من قاعدة المعرفة.
+يولّد إجابة مختصرة مستندة للمقاطع مع ذكر اسم الملف المصدر.
+يرد بعبارة ثابتة عندما لا يجد المعلومة في المصادر.
+👤 Users
 
-1. ...
-2. ...
-3. ...
-4. ...
+Primary Users: أصحاب المشاريع الصغيرة والمبتدئون في التسويق الرقمي.
 
----
+User Need: فهم أساسيات التسويق (رحلة العميل، كتابة الإعلان، مفاهيم عامة) بإجابات موثوقة ومحددة المصدر.
 
-## 👤 Users
-
-**Primary Users:**  
-[Who will use this solution?]
-
-**User Need:**  
-[What do they need to accomplish?]
-
----
-
-## 🧠 How I Designed the Solution
-
-[Briefly explain the main thinking/design decisions behind the solution.]
-
----
-
-## ⚙️ How It Works
-
-```text
-Input
-  ↓
-[Step]
-  ↓
-AI / Logic
-  ↓
-[Step]
-  ↓
-Output
-```
-
----
-
-## 🤖 Role of AI
+🧠 How I Designed the Solution
+اخترت فكرة RAG لأن المطلوب إجابات يمكن إرجاعها لمصدر.
+اعتمدت على ثلاثة ملفات قصيرة ومنظمة بدل مصادر ضخمة، ليسهل التحقق من كل إجابة بالعودة للنص.
+فصلت اختبار الاسترجاع (Retrieval Testing) عن اختبار التطبيق، لأعرف هل الخطأ من الاسترجاع أو من التوليد.
+كتبت تعليمات النظام بحيث تفرّق بين: جواب موجود، جزئي، موزّع، وغير موجود.
+⚙️ How It Works
+سؤال المستخدم
+      ↓
+Knowledge Retrieval (يسترجع المقاطع من قاعدة المعرفة)
+      ↓
+LLM (يولّد الإجابة من المقاطع فقط)
+      ↓
+Answer (إجابة + اسم الملف المصدر)
+🤖 Role of AI
 
 What does AI do in this solution?
 
-- ...
-- ...
-- ...
+يقرأ المقاطع المسترجعة ويلخّصها بلغة بسيطة.
+يجمع المعلومات الموزعة على أكثر من مقطع أو ملف.
+يصرّح بالجزء الناقص عندما تكون المعلومة جزئية.
 
-### What AI Should NOT Do
+What AI Should NOT Do
 
-- ...
-- ...
+لا يستخدم أي معلومة من خارج السياق، حتى لو كان يعرفها.
+لا يخترع أرقامًا أو أمثلة أو نسبًا غير مذكورة في المصادر.
+لا يذكر مصدرًا لم يستخدمه.
+🔄 Automation
+استرجاع المقاطع المرتبطة بالسؤال تلقائيًا.
+تمرير المقاطع للنموذج كسياق دون تدخل المستخدم.
+عرض الإجابة مع اسم الملف المصدر.
+[أضيفي هنا عقدة IF/ELSE فقط إذا بنيتيها فعلًا لرد ثابت عند فراغ الاسترجاع]
+🗂️ Data
 
----
+Input
 
-## 🔄 Automation
+سؤال نصي بالعربية.
+ثلاثة ملفات معرفة:
+customer_journey_and_sales_basics.txt (رحلة العميل والمبيعات وخدمة العملاء)
+content_and_copywriting_basics.txt (كتابة المحتوى والتسويق للعطور)
+general_marketing_basics.txt (مفاهيم التسويق العام)
 
-What parts of the process are automated?
+Output إجابة نصية مختصرة مع اسم الملف المصدر، أو عبارة: «لا تتوفر لدي معلومات كافية في المصادر للإجابة عن هذا السؤال.»
 
-- ...
-- ...
-- ...
+جودة المصادر: منظمة وسهلة التحقق، لكنها بدون كاتب أو تاريخ أو رابط أصلي، فلا يمكن إثبات حداثتها (قيد موثّق).
 
----
+🛠️ Tools & Technologies
+Tool	Purpose
+Dify (Knowledge Base، وضع Economy)	تخزين الملفات وتقسيمها واسترجاع المقاطع بمطابقة الكلمات
+Dify Chatflow	ربط الاسترجاع بالنموذج وعرض الإجابة
+gpt-5	توليد الإجابة من السياق
+🔑 Key Design Decisions
+Decision 1
 
-## 🗂️ Data
+Decision: استخدام وضع Economy في قاعدة المعرفة.
 
-### Input
+Why: [اكتبي سببك بكلماتك. مثلًا: الملفات قصيرة وأردت اختبار المطابقة بالكلمات ومعرفة حدودها].
 
-[What information enters the system?]
+Decision 2
 
-### Output
+Decision: إلزام النموذج بالسياق فقط مع عبارة ثابتة عند غياب الجواب.
 
-[What does the system produce?]
+Why: لمنع الاختلاق، ولأن العبارة الثابتة تسهّل التحقق من حالات "لا جواب" في الاختبار.
 
----
+Decision 3
 
-## 🛠️ Tools & Technologies
+Decision: اختبار القاعدة في Retrieval Testing قبل اختبار التطبيق.
 
-| Tool | Purpose |
-|---|---|
-| [Tool] | [Purpose] |
-| [Tool] | [Purpose] |
-| [Tool] | [Purpose] |
+Why: لعزل مشكلة الاسترجاع عن مشكلة التوليد. تعديل البرومبت لا يصلح سياقًا فارغًا.
 
----
+🧪 Testing
+Test 1
 
-## 🔑 Key Design Decisions
+Input: Awareness (Retrieval Testing)
 
-### Decision 1
+Expected Result: مقاطع من ملف رحلة العميل.
 
-**Decision:**  
-...
+Actual Result: رجعت مقاطع.
 
-**Why:**  
-...
+Status: ✅
 
-### Decision 2
+Test 2
 
-**Decision:**  
-...
+Input: رحلة العميل (Retrieval Testing)
 
-**Why:**  
-...
+Expected Result: مقاطع من ملف رحلة العميل.
 
----
+Actual Result: لم ترجع مقاطع، حتى بعد إضافة Keywords عربية يدويًا.
 
-## 🧪 Testing
+Status: ❌
 
-### Test 1
+Test 3
 
-**Input:**  
-...
+Input: ما هي مراحل رحلة العميل؟ (Preview للتطبيق)
 
-**Expected Result:**  
-...
+Expected Result: المراحل الأربع: التعرف، الاهتمام، الشراء، ما بعد الشراء.
 
-**Actual Result:**  
-...
+Actual Result: «لا تتوفر لدي معلومات كافية في المصادر للإجابة عن هذا السؤال.»
 
-**Status:** ✅ / ❌
+Status: ❌
 
----
+مجموعة الاختبار الكاملة (10 أسئلة)
+#	الفئة	Question	Expected Answer	Actual Result	Issue Found	Improvement
+1	واضح	ما هي مراحل رحلة العميل؟	التعرف، الاهتمام، الشراء، ما بعد الشراء	لا معلومات كافية	الاسترجاع فاضي للعربية	[ ]
+2	واضح	ما هي مرحلة Awareness؟	تعرّف العميل على العلامة أول مرة عبر فيديو أو إعلان أو منشور	[ ]	[ ]	[ ]
+3	واضح	ما هو الـ Hook؟	أول جملة أو أول ثانية في الإعلان لجذب الانتباه	[ ]	[ ]	[ ]
+4	واضح	ما هو Call to Action؟	إخبار القارئ بما يفعله بعد الإعلان، مثل "اضغط هنا للطلب"	[ ]	[ ]	[ ]
+5	موزّع/غير مباشر	كيف أبني ثقة العميل عند التسويق لعطر؟	الصدق بلا وعود مبالغ فيها + بناء العلاقة والثقة	[ ]	[ ]	[ ]
+6	موزّع/غير مباشر	كيف أجعل العميل يعود للشراء؟	رسائل شكر ونصائح ومكافآت + بناء العلاقة + خدمة العملاء	[ ]	[ ]	[ ]
+7	خارج المعرفة	كيف أضبط حملة Google Ads؟	لا تتوفر معلومات كافية	[ ]	[ ]	[ ]
+8	خارج المعرفة	ما أفضل ساعة للنشر على إنستغرام؟	لا تتوفر معلومات كافية	[ ]	[ ]	[ ]
+9	استرجاع مضلل	ما هي مرحلة الشراء؟	قرار الشراء عند وضوح المعلومات والسعر وسهولة الدفع	[ ]	[ ]	[ ]
+10	معلومة ناقصة	كم تكلفة التسويق المؤثر؟	المصدر يذكر التسويق المؤثر دون تكلفة، فيجيب جزئيًا ويصرّح بالنقص	[ ]	[ ]	[ ]
+📸 Evidence
+Final Result
 
-### Test 2
+Show Image
 
-**Input:**  
-...
+Workflow
 
-**Expected Result:**  
-...
+Show Image
 
-**Actual Result:**  
-...
+[أضيفي أيضًا: لقطة Retrieval Testing لـ Awareness (نجح)، ولقطة رحلة العميل (فشل)، ولقطة قبل/بعد التحسين]
 
-**Status:** ✅ / ❌
-
----
-
-## 📸 Evidence
-
-### Final Result
-
-![Final Result](./screenshots/final-result.png)
-
-### Workflow
-
-![Workflow](./screenshots/workflow.png)
-
----
-
-## ⚠️ Challenges & Failures
+⚠️ Challenges & Failures
 
 What didn't work as expected?
 
-- ...
-- ...
+الاسترجاع فاضي للاستعلامات العربية رغم أن الجواب موجود في الملفات، فيرد النظام "لا تتوفر معلومات".
+إضافة Keywords يدويًا لم تحسّن النتيجة.
+أخطاء في بناء الـ Chatflow: عقدة Answer غير مربوطة بمخرجات الـ LLM، وتحذير لأن متغير Context لم يُدرج داخل الـ Prompt، ومتغير result مكرر في خانة USER.
 
 How did I solve it?
 
-- ...
-- ...
+عزلت المشكلة: اختبار Awareness نجح ورحلة العميل فشل، فالخلل في الاسترجاع وليس في التوليد.
+ربطت عقدة Answer بمخرجات الـ LLM، وأصلحت تعليمات النظام.
+[اكتبي الإصلاح النهائي للاسترجاع وما تغيّر بعده، مع نتيجة قبل/بعد]
+📚 What I Learned
 
----
+Technical Lesson اختبار الاسترجاع منفصلًا عن التطبيق يختصر وقت التشخيص.
 
-## 📚 What I Learned
+Problem-Solving Lesson لا أجزم بسبب الفشل قبل اختباره: نتيجة اختبار واحدة (كلمة إنجليزية نجحت وعربية فشلت) أفادتني أكثر من التخمين.
 
-### Technical Lesson
+AI Lesson النموذج يلتزم بتعليماته: عندما لم يستلم سياقًا، قال "لا أعرف" ولم يختلق. فالرد السلبي أحيانًا سلوك صحيح وليس خللًا في البرومبت.
 
-...
-
-### Problem-Solving Lesson
-
-...
-
-### AI Lesson
-
-...
-
----
-
-## 🔮 Future Improvements
+🔮 Future Improvements
 
 If I continued developing this project, I would:
 
-- ...
-- ...
-- ...
+إضافة مصادر موثقة بروابط وتواريخ وكتّاب.
+تجربة وضع فهرسة يفهم المعنى ومقارنته بـ Economy على نفس الأسئلة.
+إضافة عقدة IF/ELSE تعيد عبارة ثابتة عند فراغ الاسترجاع.
+توسيع مجموعة الاختبار وتسجيل نتائج قبل/بعد لكل تعديل.
+🔗 Project Links
 
----
+Live Demo: [رابط التطبيق في Dify]
 
-## 🔗 Project Links
+Workflow: [رابط أو لقطة الـ Workflow]
 
-**Live Demo:** [Link]
+Repository: [رابط GitHub]
 
-**Workflow:** [Link]
+👩‍💻 Author
 
-**Repository:** [Link]
-
----
-
-## 👩‍💻 Author
-
-**[Your Name]**
+[اسمك]
 
 [LinkedIn] · [GitHub]
