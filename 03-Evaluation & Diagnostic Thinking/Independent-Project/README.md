@@ -7,7 +7,7 @@ MarketingGuide AI
 🎯 Problem
 The Context
 
-أصحاب المشاريع الصغيرة (مثل متاجر العطور والهدايا) والمبتدئون في التسويق يبحثون عن إجابات سريعة عن أساسيات التسويق، وغالبًا يسألون أدوات ذكاء اصطناعي عامة.
+أصحاب المشاريع الصغيرة والمبتدئون في التسويق يبحثون عن إجابات سريعة عن أساسيات التسويق، وغالبًا يسألون أدوات ذكاء اصطناعي عامة.
 
 The Problem
 
@@ -61,8 +61,7 @@ What AI Should NOT Do
 🔄 Automation
 استرجاع المقاطع المرتبطة بالسؤال تلقائيًا.
 تمرير المقاطع للنموذج كسياق دون تدخل المستخدم.
-عرض الإجابة مع اسم الملف المصدر.
-[أضيفي هنا عقدة IF/ELSE فقط إذا بنيتيها فعلًا لرد ثابت عند فراغ الاسترجاع]
+عرض الإجابة مع اسم الملف المصدر.]
 🗂️ Data
 
 Input
@@ -70,7 +69,7 @@ Input
 سؤال نصي بالعربية.
 ثلاثة ملفات معرفة:
 customer_journey_and_sales_basics.txt (رحلة العميل والمبيعات وخدمة العملاء)
-content_and_copywriting_basics.txt (كتابة المحتوى والتسويق للعطور)
+content_and_copywriting_basics.txt (كتابة المحتوى والتسويق ل)
 general_marketing_basics.txt (مفاهيم التسويق العام)
 
 Output إجابة نصية مختصرة مع اسم الملف المصدر، أو عبارة: «لا تتوفر لدي معلومات كافية في المصادر للإجابة عن هذا السؤال.»
@@ -148,12 +147,13 @@ Status: ❌
 Final Result
 
 Show Image
+<img width="1877" height="897" alt="1" src="https://github.com/user-attachments/assets/181b054b-f134-4495-ad7a-b8cda2af20a5" />
 
 Workflow
 
 Show Image
+<img width="1272" height="500" alt="2" src="https://github.com/user-attachments/assets/a5ddb7fb-40e2-49e1-b266-1ed012482725" />
 
-[أضيفي أيضًا: لقطة Retrieval Testing لـ Awareness (نجح)، ولقطة رحلة العميل (فشل)، ولقطة قبل/بعد التحسين]
 
 ⚠️ Challenges & Failures
 
@@ -167,7 +167,7 @@ How did I solve it?
 
 عزلت المشكلة: اختبار Awareness نجح ورحلة العميل فشل، فالخلل في الاسترجاع وليس في التوليد.
 ربطت عقدة Answer بمخرجات الـ LLM، وأصلحت تعليمات النظام.
-[اكتبي الإصلاح النهائي للاسترجاع وما تغيّر بعده، مع نتيجة قبل/بعد]
+
 📚 What I Learned
 
 Technical Lesson اختبار الاسترجاع منفصلًا عن التطبيق يختصر وقت التشخيص.
@@ -186,14 +186,11 @@ If I continued developing this project, I would:
 توسيع مجموعة الاختبار وتسجيل نتائج قبل/بعد لكل تعديل.
 🔗 Project Links
 
-Live Demo: [رابط التطبيق في Dify]
+Live Demo: https://udify.app/chat/hnON9m6G7Q1hKfbH
 
-Workflow: [رابط أو لقطة الـ Workflow]
-
-Repository: [رابط GitHub]
+Workflow: <img width="1272" height="500" alt="2" src="https://github.com/user-attachments/assets/86f160da-d852-4bbe-bb5f-69de8c8550ff" />
 
 👩‍💻 Author
 
-[اسمك]
-
-[LinkedIn] · [GitHub]
+[Dana khaled sheikha
+]
