@@ -1,4 +1,4 @@
-# XYZ Real Estate AI Agent
+[My workflow.json](https://github.com/user-attachments/files/33923371/My.workflow.json)# XYZ Real Estate AI Agent
 
 وكيل ذكاء اصطناعي على n8n يستقبل رسائل عملاء شركة XYZ Real Estate عبر Telegram، ويجمع احتياجاتهم العقارية تدريجيًا، ويحفظها في Google Sheets بعد تأكيد العميل الصريح فقط.
 
@@ -166,52 +166,29 @@ Session ID ثابت لكل محادثة في Simple Memory.
 
 ## 🧪 Testing
 
-اختبارات المشروع الاثنا عشر من المتطلبات. املئي النتيجة الفعلية والحالة لكل اختبار، وتحققي من سجل تنفيذ n8n ومن محتوى Google Sheets (وليس فقط من ردّ الـ Agent).
+<img width="862" height="842" alt="24" src="https://github.com/user-attachments/assets/555223e7-3fde-4ae7-b306-64e3ed6c40f8" />
+<img width="987" height="727" alt="23" src="https://github.com/user-attachments/assets/d819a5a8-cc9a-4fb3-be76-decb92a10f0c" />
+<img width="802" height="716" alt="25" src="https://github.com/user-attachments/assets/585e6f5a-6986-4f83-891e-0ec90e11b861" />
 
-| # | Scenario | Expected Result | Actual Result | Status |
-|---|----------|-----------------|---------------|--------|
-| 1 | عميل جديد يبدأ محادثة | رسالة الترحيب ثم بدء جمع المعلومات | [ ] | [ ✅ / ❌ ] |
-| 2 | عدة معلومات في رسالة واحدة | يستفيد من كل الواضح دون تكرار الأسئلة | [ ] | [ ✅ / ❌ ] |
-| 3 | معلومات غير مكتملة | يسأل عن الناقص فقط | [ ] | [ ✅ / ❌ ] |
-| 4 | إجابة غامضة | يطلب التوضيح بدل التخمين | [ ] | [ ✅ / ❌ ] |
-| 5 | عميل يريد الإيجار | Not Applicable في الحقلين ولا يسأل عنهما | [ ] | [ ✅ / ❌ ] |
-| 6 | عدة رسائل متتابعة | يحتفظ بسياق المحادثة | [ ] | [ ✅ / ❌ ] |
-| 7 | تصحيح العميل لإجابة | يحدّث المعلومات ويعرض ملخصًا جديدًا | [ ] | [ ✅ / ❌ ] |
-| 8 | اكتمال المعلومات دون تأكيد | لا تُحفظ البيانات (يُتحقق من n8n وSheets) | [ ] | [ ✅ / ❌ ] |
-| 9 | تأكيد العميل للملخص | تُحفظ البيانات الصحيحة في الأعمدة المحددة | [ ] | [ ✅ / ❌ ] |
-| 10 | فشل أداة Google Sheets | لا يدّعي الـ Agent نجاح الحفظ | [ ] | [ ✅ / ❌ ] |
-| 11 | إعادة إرسال التأكيد | لا يُضاف صف مكرر | [ ] | [ ✅ / ❌ ] |
-| 12 | عميلان مختلفان | تبقى معلومات كل عميل منفصلة | [ ] | [ ✅ / ❌ ] |
 
----
 
 ## 📸 Evidence
+<img width="1462" height="347" alt="26" src="https://github.com/user-attachments/assets/f9fe5b43-1608-4324-9411-b0a2f3b3636b" />
 
 ### Final Result
-![Final Result](screenshots/final-result.png)
 
 ### Workflow
-![Workflow](screenshots/workflow.png)
+<img width="1497" height="722" alt="X" src="https://github.com/user-attachments/assets/b4e0d767-9415-4683-a731-579b453396fd" />
 
-[أضيفي أيضًا: محادثة Telegram كاملة حتى التأكيد، لقطة Google Sheets بالصف المحفوظ، سجل تنفيذ n8n، ونتيجة اختبار فشل الأداة (رقم 10)، ولقطة قبل/بعد لأي إصلاح]
-
----
-
-## ⚠️ Challenges & Failures
-
-**What didn't work as expected?**
-- [اكتبي ما فشل فعلًا أثناء الاختبار، مثل: حفظ قبل التأكيد، صف مكرر، سؤال عن حقل غير منطبق، اختلاط جلسات]
-
-**How did I solve it?**
-- [اكتبي السبب والتعديل (تعليمات النظام أو تصميم الـ Workflow أو إعداد الذاكرة) ونتيجة إعادة الاختبار]
 
 ---
+
 
 ## 📚 What I Learned
 
 **Technical Lesson**
-[اكتبي ما تعلمتِه عن ربط Agent بالأدوات والذاكرة في n8n]
-
+تعلمتُ كيفية ربط AI Agent بالأدوات في n8n لتنفيذ المهام والتفاعل مع الخدمات المختلفة بشكل تلقائي.
+كما تعلمتُ ربطه بالذاكرة للاحتفاظ بسياق المحادثات السابقة وتقديم ردود أكثر ذكاءً ودقة.
 **Problem-Solving Lesson**
 رد الـ Agent لا يكفي كدليل؛ يجب التحقق من سجل التنفيذ ومحتوى Google Sheets.
 
@@ -226,22 +203,22 @@ If I continued developing this project, I would:
 - منع استدعاء أداة Google Sheets تقنيًا قبل التأكيد.
 - منع الصفوف المكررة بمفتاح فريد لكل طلب.
 - دعم لغات إضافية في المحادثة.
-- [أضيفي تحسينات أخرى من تجربتك]
 
 ---
 
 ## 🔗 Project Links
 
-**Live Demo:** [رابط بوت Telegram إن أمكن]
+**Live Demo:** 
+(https://web.telegram.org/k/#@XYZRealEstate1Assistant_bot)
+**Workflow:**<img width="1497" height="722" alt="X" src="https://github.com/user-attachments/assets/2045c4f5-1e62-408a-8397-e64936a56780" />
+https://docs.google.com/spreadsheets/d/1KZwjbv0he7xswZ5uTz-tUd8_iyOdGVySKIGBuaYM3lE/edit?gid=0#gid=0
+  
 
-**Workflow:** [ملف JSON للـ Workflow أو رابطه]
 
-**Repository:** [رابط GitHub]
 
 ---
 
 ## 👩‍💻 Author
 
-[اسمك]
+[دانا خالد شيخة]
 
-[LinkedIn] · [GitHub]
