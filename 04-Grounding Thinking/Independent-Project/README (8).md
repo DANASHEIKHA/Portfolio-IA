@@ -184,12 +184,13 @@ Answer (إجابة + اسم الملف المصدر)
 ## 📸 Evidence
 
 ### Final Result
-![Final Result](screenshots/final-result.png)
+<img width="1878" height="815" alt="لقطة شاشة 2026-10-25 085456" src="https://github.com/user-attachments/assets/df85d173-801c-4097-8377-7f94e6aa2de7" />
+
 
 ### Workflow
-![Workflow](screenshots/workflow.png)
+<img width="1272" height="500" alt="2" src="https://github.com/user-attachments/assets/2cb9ea69-6dd8-4d4b-8030-cc756e30efd3" />
+<img width="1877" height="897" alt="1" src="https://github.com/user-attachments/assets/57e7fa3e-cce7-4f84-a687-d8f55c9e0d7d" />
 
-[أضيفي أيضًا: لقطة Retrieval Testing لـ `Awareness` (نجح)، ولقطة `رحلة العميل` (فشل)، ولقطة قبل/بعد التحسين]
 
 ---
 
@@ -203,7 +204,7 @@ Answer (إجابة + اسم الملف المصدر)
 **How did I solve it?**
 - عزلت المشكلة: اختبار `Awareness` نجح و`رحلة العميل` فشل، فالخلل في الاسترجاع وليس في التوليد.
 - ربطت عقدة Answer بمخرجات الـ LLM، وأصلحت تعليمات النظام.
-- [اكتبي الإصلاح النهائي للاسترجاع وما تغيّر بعده، مع نتيجة قبل/بعد]
+<img width="1655" height="827" alt="p" src="https://github.com/user-attachments/assets/39ac3930-7d44-45e7-915a-28cdb1da8d75" />
 
 ---
 
@@ -232,16 +233,15 @@ If I continued developing this project, I would:
 
 ## 🔗 Project Links
 
-**Live Demo:** [رابط التطبيق في Dify]
+**Live Demo:** https://udify.app/chat/hnON9m6G7Q1hKfbH
 
-**Workflow:** [رابط أو لقطة الـ Workflow]
+**Workflow:** <img width="1272" height="500" alt="2" src="https://github.com/user-attachments/assets/2dd04fb4-f2f6-4d01-935b-279e01797e70" />
 
-**Repository:** [رابط GitHub]
+
 
 ---
 
 ## 👩‍💻 Author
 
-[اسمك]
 
-[LinkedIn] · [GitHub]
+[دانا خالد شيخة]
