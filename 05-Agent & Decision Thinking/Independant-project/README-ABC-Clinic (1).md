@@ -2,7 +2,6 @@
 
 وكيل ذكاء اصطناعي على n8n يستقبل طلبات حجز المواعيد عبر Telegram، ويجمع معلومات المريض، ويتحقق من المواعيد المتاحة، ويطلب التأكيد الصريح، ثم يثبّت الحجز في Google Sheets ويتحقق من نتيجته.
 
-> الأجزاء بين `[ ]` تحتاج تعبئتها بنتائجك الفعلية قبل التسليم. جدول الاختبار فيه السيناريوهات والسلوك المتوقع من المتطلبات، أما النتائج فتُكتب من تجاربك فقط.
 
 ---
 
@@ -12,7 +11,7 @@
 تستقبل عيادة ABC Clinic طلبات حجز مواعيد من المرضى، وتحتاج إلى جمع معلومات محددة (الاسم، الهاتف، حالة المريض، نوع الزيارة، التاريخ والوقت) والتأكد من توفر الموعد.
 
 ### The Problem
-[اكتبي بكلماتك المشكلة الحالية في الحجز اليدوي، مثل: ضغط على الاستقبال، تكرار الأسئلة، أخطاء في تثبيت المواعيد]
+[ المشكلة الحالية في الحجز اليدوي، مثل: ضغط على الاستقبال، تكرار الأسئلة، أخطاء في تثبيت المواعيد]
 
 ### Why It Matters
 الحجز غير المؤكد أو المكرر أو المعلن نجاحه دون حدوثه يضر بالمرضى وبالعيادة. كما أن الحالات الطبية والطارئة يجب ألا تُعامل كطلبات حجز عادية.
@@ -48,7 +47,6 @@ Agent في n8n يقترح الإجراء التالي بصيغة منظمة (Str
 - **حالة المحادثة في ورقة Sessions** (state وpending_key) وليس في الذاكرة، لأن Simple Memory ليست مصدرًا موثوقًا لحالة الحجز.
 - **pending_key:** بصمة للملخص المعروض، فلا يُقبل التأكيد إلا على بيانات مطابقة تمامًا لآخر ملخص.
 - **حماية من الأحداث المكررة** بمقارنة `update_id` مع `last_update_id`.
-- [أضيفي أي قرار تصميم آخر اتخذتِه فعلًا]
 
 ---
 
@@ -118,7 +116,7 @@ Switch (action)
 
 **الحقول التي يجمعها الـ Agent:** patient_name، phone_number، patient_status (New/Existing)، visit_type (General Checkup / Follow-up / Vaccination)، appointment_date (YYYY-MM-DD)، appointment_time (HH:MM).
 
-**الخصوصية:** [اكتبي أنك استخدمتِ بيانات تجريبية فقط، وأخفيتِ الأرقام الحقيقية والمفاتيح من اللقطات]
+**الخصوصية:** [ استخدمتِ بيانات تجريبية فقط، وأخفيتِ الأرقام الحقيقية والمفاتيح من اللقطات]
 
 ---
 
@@ -193,38 +191,24 @@ Simple Memory ليست قاعدة بيانات دائمة ولا مصدرًا م
 ## 📸 Evidence
 
 ### Final Result
-![Final Result](screenshots/booking-success.png)
+<img width="1773" height="672" alt="لقطة شاشة 2026-10-25 143735" src="https://github.com/user-attachments/assets/0a76c827-9e16-4478-8610-3384c5242b7f" />
+<img width="1156" height="898" alt="لقطة شاشة 2026-10-25 143838" src="https://github.com/user-attachments/assets/7e4669a9-19d4-409d-b03c-dd42e760a68e" />
 
 ### Workflow
-![Workflow](screenshots/workflow.png)
 
-[أضيفي حسب المطلوب: حجز ناجح (محادثة + صف الجدول بعد التحديث)، حالة توقف أو تصعيد مع تنبيه الموظفة، محاولة حجز بدون تأكيد مع سجل Executions يثبت عدم الكتابة، لقطة قبل/بعد التحسين]
 
-أخفي أرقام الهواتف الحقيقية والمفاتيح قبل التصوير.
+<img width="1773" height="672" alt="لقطة شاشة 2026-10-25 143735" src="https://github.com/user-attachments/assets/ea830808-ac2d-4a4c-a710-970794c2a6b7" />
 
 ---
 
-## ⚠️ Challenges & Failures
-
-**What didn't work as expected?**
-- [اكتبي الاختبار الذي لم يتصرف فيه الـ Agent كما هو متوقع، وماذا حدث فعليًا مع لقطة شاشة]
 
 **How did I solve it?**
 
-| Item | Description |
-|---|---|
-| Problem observed | [ ] |
-| Why it happened | [ ] (Prompt، نموذج، أو منطق Workflow) |
-| Change made | [ ] |
-| Re-test result | [ ] |
-| Side effects checked | [ ] (أعيدي اختبار 2 إلى 3 حالات قريبة) |
 
 ---
 
 ## 📚 What I Learned
 
-**Technical Lesson**
-[ما تعلمتِه عن الجلسات والذاكرة وSwitch وGate في n8n]
 
 **Problem-Solving Lesson**
 لا يكفي أن يقول الـ Agent إنه لم يحجز؛ يجب فحص سجل Executions وورقة Schedule.
@@ -240,7 +224,6 @@ If I continued developing this project, I would:
 - دعم تعديل الحجوزات وإلغائها بمسار مراقب.
 - استخدام قاعدة بيانات تدعم المعاملات الذرية بدل Google Sheets، لإزالة نافذة السباق الصغيرة.
 - استخدام ذاكرة دائمة بدل Simple Memory.
-- [أضيفي أفكارًا أخرى من تجربتك]
 
 ### حدود النظام الحالية
 - لا معاملات ذرية في Google Sheets (نافذة سباق صغيرة).
@@ -251,16 +234,15 @@ If I continued developing this project, I would:
 
 ## 🔗 Project Links
 
-**Live Demo:** [رابط البوت إن أمكن]
+**Live Demo:**https://web.telegram.org/k/#@ABCClinicAssistant_bot
 
-**Workflow:** [ملف JSON للـ Workflow أو رابطه، بدون مفاتيح]
+**Workflow:** <img width="1156" height="898" alt="لقطة شاشة 2026-10-25 143838" src="https://github.com/user-attachments/assets/da99a564-2956-4677-8959-e725304f6c0f" />
 
-**Repository:** [رابط GitHub]
+
 
 ---
 
 ## 👩‍💻 Author
 
-[اسمك]
+[دانا خالد شيخة]
 
-[LinkedIn] · [GitHub]
