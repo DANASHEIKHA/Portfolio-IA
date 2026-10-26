@@ -2,8 +2,6 @@
 
 نظام RAG مبني بالكامل على n8n وSupabase Vector Store: مسار يجهّز المعرفة من ملف PDF (استخراج، تقسيم، Embeddings، تخزين)، وAI Agent يبحث في هذه المعرفة ويجيب منها فقط.
 
-> الأجزاء بين `[ ]` تعبئينها بنتائجك الفعلية. لم أكتب أي نتيجة اختبار لم تحدث.
-
 ---
 
 ## 🎯 Problem
@@ -110,7 +108,7 @@ Answer
 ## 🗂️ Data
 
 **Input**
-- ملف PDF في Google Drive: [اسم الملف ومحتواه].
+- ملف PDF في Google Drive:AI Automation Starter Guide).
 - أسئلة المستخدم في المحادثة.
 
 **Output**
@@ -154,61 +152,41 @@ Top K (Limit) = 4 كنقطة بداية. [القيمة الفعلية]
 **Why:**
 يوازن بين كفاية السياق وتجنب مقاطع غير مرتبطة، ويُختبر مع 3 و5.
 
-### Decision 3
-**Decision:**
-جعل الـ Vector Store أداة للـ Agent مع تعليمات "استخدمها عندما يتطلب السؤال معرفة".
 
-**Why:**
-لتعليم Tool Selection بدل الاستدعاء الأعمى.
 
-### Decision 4
-**Decision:**
-نفس نموذج Embeddings في الإدخال والاسترجاع.
-
-**Why:**
-لأن اختلاف النموذج أو الأبعاد يسبب أخطاء Dimension وبحثًا غير صحيح.
-
----
-
-## 🧪 Testing
-
-| # | Test | Input | Expected Result | Actual Result | Status |
-|---|------|-------|-----------------|---------------|--------|
-| 1 | معلومة موجودة | `What is RAG?` | يستدعي الأداة ويجيب من المقاطع | [ ] | [ ✅ / ❌ ] |
-| 2 | بحث دلالي | `Can an AI Agent interact with external systems?` (والنص يقول: AI Agents can use external tools) | يجد المعلومة رغم اختلاف الكلمات | [ ] | [ ✅ / ❌ ] |
-| 3 | معلومة غير موجودة | `What is the admission policy of Harvard University?` | `I don't have enough information in the knowledge base to answer this.` دون اختلاق | [ ] | [ ✅ / ❌ ] |
-| 4 | الذاكرة مع RAG | `What is RAG?` ثم `Why is it useful?` | يفهم "it" من السياق ويجيب من المعرفة | [ ] | [ ✅ / ❌ ] |
-
-**تحقق إضافي:** افتحي Supabase وتأكدي من وجود Records بعد الـ Ingestion (المحتوى وMetadata وEmbedding).
-
----
 
 ## 📸 Evidence
 
 ### Final Result
-![Final Result](screenshots/rag-answer.png)
+<img width="1842" height="842" alt="لقطة شاشة 2026-10-26 115505" src="https://github.com/user-attachments/assets/aca36fab-7445-47fa-8123-79fa61a2c9a0" />
 
 ### Workflow
-![Workflow](screenshots/workflow.png)
+<img width="1297" height="727" alt="ص8" src="https://github.com/user-attachments/assets/16810db7-1b6d-4017-b02a-c821b7f5795f" />
 
-[أضيفي: لقطة جدول Supabase بعد الإدخال، لقطة Executions، لقطة الاسترجاع الناجح، ولقطة سؤال بلا إجابة. أخفي المفاتيح]
+<img width="1736" height="737" alt="لقطة شاشة 2026-10-26 112553" src="https://github.com/user-attachments/assets/80951b65-f34d-4199-b532-3beff900817b" />
 
 ---
 
 ## ⚠️ Challenges & Failures
-
 **What didn't work as expected?**
-- [اكتبي ما واجهتِه فعلًا. من المشاكل المحتملة في الدليل: لا Record في Supabase، خطأ في البحث، Dimension Error، الـ Agent يجيب معلومات غير موجودة، أو Retrieval سيئ]
+- ظهر Dimension Error أثناء الإدخال أو البحث.
 
 **How did I solve it?**
-- [السبب، والتعديل، ونتيجة إعادة الاختبار]
-
+- حددت أن المشكلة في التوافق بين نموذج Embeddings وأبعاد الـ Vector في جدول Supabase.
+- راجعت أبعاد العمود وأبعاد النموذج المستخدم، وجعلتهما متطابقين، واستخدمت النموذج نفسه في الإدخال والبحث.
+- أعدت تشغيل الإدخال (وأفرغت السجلات القديمة عند الحاجة) ثم اختبرت من جديد.
 ---
 
 ## 📚 What I Learned
 
 **Technical Lesson**
-[ما تعلمتِه عن الـ Chunking وEmbeddings وVector Store]
+تعلمت كيف يعمل RAG خطوة بخطوة بدل أن يبقى مخفيًا خلف واجهة جاهزة:
+
+- **Chunking:** النموذج لا يتعامل مع الوثيقة كاملة، فنقسّمها إلى مقاطع صغيرة. حجم المقطع وOverlap قرار هندسي وليس رقمًا سحريًا؛ فالمقاطع الصغيرة جدًا تفقد السياق، والكبيرة جدًا تضعف دقة البحث، والـ Overlap يمنع انقطاع المعنى عند حدود المقاطع. بدأت بـ [500] و[50] واختبرت أثرهما.
+- **Embeddings:** هي تحويل النص إلى متجهات رقمية تمثل المعنى، فيعمل البحث الدلالي حتى لو اختلفت الكلمات بين السؤال والنص. ويجب استخدام نموذج Embeddings نفسه في الإدخال والبحث، وإلا حدث خطأ في الأبعاد أو تراجعت جودة النتائج.
+- **Vector Store (Supabase):** يخزن المقاطع مع متجهاتها وMetadata، ثم يجد أقرب المقاطع للسؤال بالتشابه (عبر `match_documents`)، ويحدد Top K عدد المقاطع المعادة للنموذج.
+- **Retrieval وGeneration:** مرحلتان منفصلتان، فقد يُسترجع مقطع صحيح وتأتي الإجابة ناقصة، وقد تكون الإجابة خاطئة لأن الاسترجاع لم يجد المقطع المناسب. لذلك أفحص ما استُرجع قبل أن أحكم على النموذج.
+- **Knowledge وMemory:** المعرفة في Supabase تُسترجع عند الحاجة، أما Memory فتحفظ سياق المحادثة فقط، ولا يصح الخلط بينهما.
 
 **Problem-Solving Lesson**
 عند سوء الإجابة يجب تحديد المرحلة: الاستخراج، التقسيم، التخزين، الاسترجاع، أم التوليد.
@@ -230,16 +208,15 @@ If I continued developing this project, I would:
 
 ## 🔗 Project Links
 
-**Live Demo:** [ ]
 
-**Workflow:** [ملف JSON بدون مفاتيح]
+**Workflow:** <img width="1297" height="727" alt="لقطة شاشة 2026-10-26 112644" src="https://github.com/user-attachments/assets/063e05af-6514-44ea-a5a9-2559e3b41bc7" />
 
-**Repository:** [رابط GitHub]
+
+<img width="1736" height="737" alt="لقطة شاشة 2026-10-26 112553" src="https://github.com/user-attachments/assets/d123eed1-f41b-4ba6-893e-c878edf9c4fb" />
 
 ---
 
 ## 👩‍💻 Author
 
-[اسمك]
+[دانا خالد شيخة]
 
-[LinkedIn] · [GitHub]
