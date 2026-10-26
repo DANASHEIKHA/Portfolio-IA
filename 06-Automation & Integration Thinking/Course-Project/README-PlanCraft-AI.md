@@ -1,8 +1,14 @@
 # PlanCraft AI
+PlanCraft AI هو تطبيق ويب مدعوم بالذكاء الاصطناعي، يساعد المستخدمين على تحويل أفكار المشاريع إلى خطط تنفيذية منظمة وقابلة للتطبيق.
 
+يجمع المشروع بين ثلاثة مكونات رئيسية:
+
+Lovable: لبناء واجهة التطبيق ووظائفه.
+Supabase: لتخزين طلبات المشاريع والخطط الناتجة.
+n8n Cloud: لبناء وإدارة سير العمل الآلي الذي يعالج الطلبات ويولّد الخطط باستخدام الذكاء الاصطناعي.
+يستقبل التطبيق فكرة المشروع من المستخدم، ويحفظ بياناتها في قاعدة البيانات، ثم يرسل طلبًا إلى Workflow في n8n. يسترجع الـ Workflow بيانات المشروع، ويستخدم AI Agent لإنشاء خطة منظمة، ثم يحفظ النتائج في Supabase لتتمكن واجهة التطبيق من عرضها للمستخدم.
 تطبيق ويب يحوّل فكرة المشروع إلى خطة تنفيذية منظمة: واجهة على Lovable، وقاعدة بيانات على Supabase، وWorkflow في n8n Cloud يستخدم AI Agent لتوليد الخطة وحفظها.
 
-> الأجزاء بين `[ ]` تحتاج تعبئتها بنتائجك الفعلية قبل التسليم. جدول الاختبار فيه الاختبارات الثمانية من دليل المشروع والسلوك المتوقع، أما النتائج فتُكتب من تجاربك فقط.
 
 ---
 
@@ -78,7 +84,6 @@ Supabase: Update Request Status  (completed)
 Lovable: Fetch the saved plan  →  Display the actual result
 ```
 
-[عدّلي المخطط إذا كان تصميمك للاستجابة (Respond to Webhook) مختلفًا: مبكرة أو نهائية]
 
 ---
 
@@ -132,7 +137,7 @@ Lovable: Fetch the saved plan  →  Display the actual result
 | n8n Cloud | تنسيق Workflow المعالجة |
 | Webhook / Edit Fields | استقبال الطلب واستخراج `request_id` |
 | Supabase nodes | استرجاع الطلب وحفظ الخطة وتحديث الحالة |
-| AI Agent + Chat Model | توليد الخطة: [اسم النموذج الذي استخدمتِه] |
+| AI Agent + Chat Model | توليد الخطة
 | Structured Output Parser | فرض بنية الخرج |
 
 ---
@@ -169,50 +174,46 @@ Lovable: Fetch the saved plan  →  Display the actual result
 
 ---
 
-## 🧪 Testing
+##🧪 Testing
 
-افحصي كل نتيجة في Supabase وn8n Executions (وليس فقط في الواجهة).
-
-| # | Test | Expected Result | Actual Result | Status |
-|---|------|-----------------|---------------|--------|
-| 1 | إرسال طلب جديد من التطبيق المنشور | يقبل النموذج الطلب | [ ] | [ ✅ / ❌ ] |
-| 2 | التحقق من حفظ الطلب | صف جديد في `project_requests` بحالة `pending` | [ ] | [ ✅ / ❌ ] |
-| 3 | التحقق من تشغيل n8n | الطلب يصل إلى Production Webhook وتتنفذ العقد بالتسلسل | [ ] | [ ✅ / ❌ ] |
-| 4 | التحقق من إنشاء الخطة | خطة في `project_plans` مرتبطة بالطلب الصحيح | [ ] | [ ✅ / ❌ ] |
-| 5 | التحقق من تحديث الحالة | الحالة `completed` (وإذا فشلت المعالجة فلا تُعرض مكتملة) | [ ] | [ ✅ / ❌ ] |
-| 6 | عرض الخطة داخل التطبيق | تظهر الخطة الحقيقية المحفوظة وليس بيانات ثابتة | [ ] | [ ✅ / ❌ ] |
-| 7 | إعادة تحميل صفحة الخطة | تبقى الخطة ظاهرة | [ ] | [ ✅ / ❌ ] |
-| 8 | اختبار فشل (`request_id` غير موجود في بيئة اختبار) | لا تُنشأ خطة غير مرتبطة بطلب صحيح، ويُعالج الخطأ بوضوح | [ ] | [ ✅ / ❌ ] |
-
----
 
 ## 📸 Evidence
 
 ### Final Result
-![Final Result](screenshots/plan-details.png)
+<img width="1892" height="912" alt="لقطة شاشة 2026-10-26 111647" src="https://github.com/user-attachments/assets/469d5bbb-2d2b-4d50-b469-e9712d1849c5" />
+
+<img width="1275" height="721" alt="لقطة شاشة 2026-10-22 120952" src="https://github.com/user-attachments/assets/074a0c14-8004-4ef2-bfdb-ab6f2d5d2a9a" />
+<img width="1780" height="727" alt="لقطة شاشة 2026-10-26 111156" src="https://github.com/user-attachments/assets/5ecd453f-c9bf-4285-b372-9ecd975d9cac" />
+<img width="1045" height="878" alt="لقطة شاشة 2026-10-22 130616" src="https://github.com/user-attachments/assets/f0c4f524-2ef7-4a69-8dc5-1bc25aaf803d" />
+<img width="1780" height="727" alt="لقطة شاشة 2026-10-26 111156" src="https://github.com/user-attachments/assets/d19176e0-9903-4eb7-9a6b-08ede5fa797e" />
 
 ### Workflow
-![Workflow](screenshots/n8n-workflow.png)
+<img width="1275" height="721" alt="لقطة شاشة 2026-10-22 120952" src="https://github.com/user-attachments/assets/e2c73ae4-68d0-45b7-a16d-5b20d67608a6" />
 
-[أضيفي أيضًا: لقطة الجدولين في Supabase بعد الحفظ، لقطة Executions الناجحة، لقطة الحالة `completed`، ولقطة قبل/بعد لأي إصلاح. أخفي المفاتيح والروابط السرية قبل التصوير]
+<img width="1892" height="912" alt="لقطة شاشة 2026-10-26 111647" src="https://github.com/user-attachments/assets/7c045b86-ebb7-433b-adbd-d12730a20d84" />
 
 ---
 
 ## ⚠️ Challenges & Failures
 
 **What didn't work as expected?**
-- [اكتبي ما فشل فعلًا: مثل request_id فارغ، تعبير Edit Fields، فشل حفظ الخطة، رسالة فشل رغم وجود الخطة، أو الاستجابة المبكرة للـ Webhook]
+<img width="1502" height="886" alt="لقطة شاشة 2026-10-26 111816" src="https://github.com/user-attachments/assets/1756f9c8-e998-4093-898c-d3bba6d052ee" />
 
 **How did I solve it?**
-- [اكتبي السبب، والتعديل بالضبط، ونتيجة إعادة الاختبار]
-
+أعدنا الربط بشكل صحيح
 ---
 
 ## 📚 What I Learned
 
 **Technical Lesson**
-[ما تعلمتِه عن ربط Lovable وSupabase وn8n ونقل البيانات بينها بـ JSON]
+تعلمت أن التكامل بين الأدوات يعتمد على تتبع البيانات من مرحلة لمرحلة، وليس على نجاح كل أداة منفردة.
 
+- **التنقل بين النظم عبر JSON:** يحفظ Lovable الطلب في Supabase، ثم يرسل `request_id` إلى n8n عبر Webhook، ويقرأه الـ Workflow من `body` الطلب الوارد ليسترجع بيانات المشروع كاملة من قاعدة البيانات.
+- **المعرّف هو الرابط بين الأجزاء:** `request_id` يربط الطلب بالـ Workflow وبالخطة المحفوظة، وقيد `UNIQUE` عليه يمنع تكرار الخطة للطلب نفسه.
+- **الحالة تعكس التقدم:** تحديث `status` من `pending` إلى `completed` يتيح للواجهة معرفة متى تعرض الخطة، ويمنع عرض طلب فاشل كأنه مكتمل.
+- **Production URL وليس Test URL:** الاتصال الفعلي بين التطبيق وn8n يتطلب تفعيل الـ Workflow واستخدام الـ Production Webhook.
+- **المفاتيح خارج المتصفح:** يتم الاستدعاء من طبقة خادم حتى لا تظهر الأسرار في كود الواجهة.
+- **التحقق من الحفظ الفعلي:** نجاح عقدة في n8n لا يكفي، فأتحقق من الصف في Supabase ومن ظهور الخطة بعد إعادة تحميل الصفحة.
 **Problem-Solving Lesson**
 عند فشل النظام يجب تتبع البيانات في كل مرحلة: الواجهة، قاعدة البيانات، سجل Executions.
 
@@ -227,7 +228,6 @@ If I continued developing this project, I would:
 - إضافة مصادقة مستخدمين وربط كل طلب بمالكه، مع سياسات RLS تمنع الاطلاع على بيانات الآخرين.
 - حماية Webhook بآلية مصادقة.
 - إضافة إعادة محاولة آمنة بعد التحقق من وجود خطة سابقة.
-- [أضيفي أفكارًا أخرى من تجربتك]
 
 ### حدود المشروع الحالية
 - لا توجد مصادقة مستخدمين مكتملة، فلا ينبغي نشر التطبيق للاستخدام العام مع إتاحة غير مقيّدة للبيانات.
@@ -237,16 +237,10 @@ If I continued developing this project, I would:
 
 ## 🔗 Project Links
 
-**Live Demo:** [رابط التطبيق المنشور]
+**Live Demo:** https://pixel-perfect-replay-1901.lovable.app
 
-**Workflow:** [ملف JSON للـ Workflow، بدون مفاتيح]
-
-**Repository:** [رابط GitHub]
-
----
+**Workflow:** <img width="1780" height="727" alt="لقطة شاشة 2026-10-26 111156" src="https://github.com/user-attachments/assets/26cb450d-f9f7-4479-9762-466ba9ee15de" />
 
 ## 👩‍💻 Author
 
-[اسمك]
-
-[LinkedIn] · [GitHub]
+[دانا خالد شيخة]
